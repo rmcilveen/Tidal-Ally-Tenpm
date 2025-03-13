@@ -7,16 +7,17 @@ from email.mime.text import MIMEText
 
 filename = "Ally10pm.html"
 
-def send_email_via_smtp(recipient, subject, body):
+def send_email_via_smtp(recipient,cc, subject, body):
     try:
         message = MIMEMultipart('alternative')
         message['From'] = 'Tidal-NoReply@apexclearing.com'
         message['To'] = recipient
+        message['CC'] = cc
         message['Subject'] = subject
         msg = open(filename,"r")
         #print(msg.read())
         message.attach(MIMEText(msg.read(), 'html'))
-        #print(message.as_string())
+        print(message.as_string())
     
         # SMTP session
         session =    smtplib.SMTP('nonauthrelay.apexclearing.local',25)#smtplib.SMTP('smtp.office365.com', 587)  # use outlook's smtp server and port ## Updated to internal relay server
@@ -29,5 +30,6 @@ def send_email_via_smtp(recipient, subject, body):
     except Exception as e:
         print("Error", e)
 
-email_Subject = '*** TEST *** Ally Critical Data Feeds - Batch Update for 10:00pm CT'
-send_email_via_smtp('rmcilveen@apexfintechsolutions.com,arossi@apexfintechsolutions.com, acorales@apexfintechsolutions.com, croaquin@apexfintechsolutions.com, mkulkarni@apexfintechsolutions.com', email_Subject, "") 
+email_Subject = 'Ally Critical Data Feeds - Batch Update for 10:00pm CT'
+#send_email_via_smtp('TKBatch@invest.ally.com','rmcilveen@apexfintechsolutions.com,arossi@apexfintechsolutions.com, acorales@apexfintechsolutions.com, croaquin@apexfintechsolutions.com, mkulkarni@apexfintechsolutions.com', email_Subject, "") 
+send_email_via_smtp('test@example.com','rmcilveen@apexfintechsolutions.com,arossi@apexfintechsolutions.com, acorales@apexfintechsolutions.com, croaquin@apexfintechsolutions.com, mkulkarni@apexfintechsolutions.com', email_Subject, "") 
